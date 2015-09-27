@@ -1,20 +1,29 @@
 
-setwd("/Users/ahmedkammorah/Desktop/Self_study_Pro/Getting\ and\ Cleaning\ Data/Project/")
+# setwd("/Users/ahmedkammorah/Desktop/Self_study_Pro/Getting\ and\ Cleaning\ Data/Project/")
 
+dataDir = "data"
+if(!file.exists(dataDir)){
+    dir.create(dataDir)
+}
+
+setwd("./data")
 
 fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 destFile="./UCI_HAR_Dataset.zip"
 if(!file.exists(destFile)){
 # Download data files 
-# unzip data files 
     download.file(fileURL, destfile=destFile, method = "curl")  
     dateDownloaded <- date()
     dateDownloaded
+    
+}
+dirName = "./UCI\ HAR\ Dataset/"
+# unzip data files 
+if(!file.exists(dirName)){
     unzip(destFile)
 }
 
-
-setwd("./UCI\ HAR\ Dataset/")
+setwd(dirName)
 
 # read feature file 
 features = read.table("./features.txt")
@@ -70,5 +79,5 @@ XMean_StdWithY_andSubject <- cbind(subjFull, xMean_StdWithY)
 
 avg <- aggregate(xFull, list(activity=yFull[,1], subject = subjFull[,1]), mean)
 
-write.csv(avg, file='./result.txt')
+write.csv(avg, file='../result.txt')
 
